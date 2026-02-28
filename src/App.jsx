@@ -1,0 +1,86 @@
+import { useState, useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import Navbar from "./components/Layout/Navbar/Navbar";
+import Hero from "./sections/Hero/Hero";
+import About from "./sections/About/About";
+import Education from "./sections/Education/Education";
+import Skills from "./sections/Skills/Skills";
+import Projects from "./sections/Projects/Projects";
+import Contact from "./sections/Contact/Contact";
+import Footer from "./components/Layout/Footer/Footer";
+import Background from "./components/Common/Background";
+// import MouseTracker from "./components/Common/MouseTracker";
+
+function App() {
+  const [activeSection, setActiveSection] = useState("home");
+
+  // Initialize AOS
+  useEffect(() => {
+    AOS.init({
+      duration: 800,
+      easing: "ease-out-cubic",
+      once: true,
+      offset: 50,
+    });
+  }, []);
+
+  // Smooth scroll to section
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+    setActiveSection(sectionId);
+  };
+
+  // Update active section based on scroll position
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = [
+        "home",
+        "about",
+        "education",
+        "skills",
+        "projects",
+        "contact",
+      ];
+      const scrollPosition = window.scrollY + 100;
+
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element) {
+          const offsetTop = element.offsetTop;
+          const offsetHeight = element.offsetHeight;
+          if (
+            scrollPosition >= offsetTop &&
+            scrollPosition < offsetTop + offsetHeight
+          ) {
+            setActiveSection(section);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-transparent text-white font-sans">
+      {/* <MouseTracker /> */}
+      <Background />
+      <Navbar activeSection={activeSection} scrollToSection={scrollToSection} />
+      <Hero scrollToSection={scrollToSection} />
+      <About />
+      <Education />
+      <Skills />
+      <Projects />
+      <Contact />
+      <Footer />
+    </div>
+  );
+}
+
+export default App;
