@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   conTact,
   resourcesLinks,
@@ -6,6 +7,44 @@ import {
 } from "./contactData";
 
 function Contact() {
+  const [result, setResult] = useState("");
+
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    setResult("TRANSMITTING...");
+    const formData = new FormData(event.target);
+
+    // ⚠️ ตรงนี้คือจุดสำคัญ: ให้เอา Access Key จากอีเมลมาใส่แทนที่ "YOUR_ACCESS_KEY_HERE"
+    // สมัครฟรีเพื่อรับ Access Key ได้ที่: https://web3forms.com/ (ใส่อีเมลตัวเองแล้วมันจะส่งรหัสมาให้)
+    formData.append("access_key", "99e89307-f49f-4b9d-870a-f53759f68e6b");
+
+    // ตั้งค่าหัวข้ออีเมล และ ผู้ส่งให้เรารู้ทันทีว่าเป็นงานจ้าง
+    formData.append("subject", "🚀 [Portfolio] มีคนทักแชทมาจากหน้าเว็บไซต์!");
+    formData.append("from_name", "Portfolio System Notification");
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setResult("TRANSMISSION_SUCCESSFUL");
+        event.target.reset(); // ล้างข้อมูลในฟอร์มเมื่อส่งเสร็จ
+
+        // ให้ข้อความ Success หายไปเองหลังผ่านไป 3 วินาที
+        setTimeout(() => setResult(""), 3000);
+      } else {
+        console.log("Error", data);
+        setResult("TRANSMISSION_FAILED: " + data.message);
+      }
+    } catch (error) {
+      setResult("CONNECTION_ERROR_PLEASE_TRY_AGAIN");
+    }
+  };
+
   return (
     <section
       id="contact"
@@ -104,28 +143,51 @@ function Contact() {
               <span className="w-2 h-2 rounded-full bg-pink-500 animate-pulse drop-shadow-[0_0_5px_rgba(236,72,153,0.8)]"></span>
               DIRECT_MESSAGE
             </h3>
-            <form className="space-y-4">
+            <form onSubmit={onSubmit} className="space-y-4">
               <input
                 type="text"
+                name="name"
+                required
                 className="w-full px-4 py-3 bg-[#050810] border border-slate-800 rounded-xl focus:outline-none focus:border-pink-500 text-white placeholder-slate-600 transition-colors"
                 placeholder="USER_NAME"
               />
               <input
                 type="email"
+                name="email"
+                required
                 className="w-full px-4 py-3 bg-[#050810] border border-slate-800 rounded-xl focus:outline-none focus:border-cyan-500 text-white placeholder-slate-600 transition-colors"
                 placeholder="USER_EMAIL"
               />
               <textarea
+                name="message"
+                required
                 rows="4"
                 className="w-full px-4 py-3 bg-[#050810] border border-slate-800 rounded-xl focus:outline-none focus:border-purple-500 text-white placeholder-slate-600 resize-none transition-colors"
                 placeholder="MESSAGE_CONTENT"
               ></textarea>
               <button
                 type="submit"
-                className="w-full py-4 bg-gradient-to-r from-pink-600 via-purple-600 to-cyan-600 rounded-xl font-bold tracking-widest uppercase text-white hover:opacity-90 transition-all hover:-translate-y-1 shadow-[0_0_20px_rgba(236,72,153,0.3)]"
+                disabled={result === "TRANSMITTING..."}
+                className="w-full py-4 bg-gradient-to-r from-pink-600 via-purple-600 to-cyan-600 rounded-xl font-bold tracking-widest uppercase text-white hover:opacity-90 transition-all hover:-translate-y-1 shadow-[0_0_20px_rgba(236,72,153,0.3)] disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                TRANSMIT
+                {result === "TRANSMITTING..." ? "TRANSMITTING..." : "TRANSMIT"}
               </button>
+
+              {/* Status Message Display */}
+              {result && (
+                <div
+                  className={`text-center font-mono text-sm mt-4 p-2 rounded-lg border backdrop-blur-sm ${
+                    result.includes("SUCCESS")
+                      ? "text-green-400 border-green-500/30 bg-green-500/10"
+                      : result.includes("TRANSMITTING")
+                        ? "text-cyan-400 border-cyan-500/30 bg-cyan-500/10 animate-pulse"
+                        : "text-red-400 border-red-500/30 bg-red-500/10"
+                  }`}
+                >
+                  <span className="mr-2">&gt;</span>
+                  {result}
+                </div>
+              )}
             </form>
           </div>
         </div>
