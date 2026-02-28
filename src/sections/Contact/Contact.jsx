@@ -149,21 +149,21 @@ function Contact() {
                 name="name"
                 required
                 className="w-full px-4 py-3 bg-[#050810] border border-slate-800 rounded-xl focus:outline-none focus:border-pink-500 text-white placeholder-slate-600 transition-colors"
-                placeholder="USER_NAME"
+                placeholder="Your Name"
               />
               <input
                 type="email"
                 name="email"
                 required
                 className="w-full px-4 py-3 bg-[#050810] border border-slate-800 rounded-xl focus:outline-none focus:border-cyan-500 text-white placeholder-slate-600 transition-colors"
-                placeholder="USER_EMAIL"
+                placeholder="Your Email"
               />
               <textarea
                 name="message"
                 required
                 rows="4"
                 className="w-full px-4 py-3 bg-[#050810] border border-slate-800 rounded-xl focus:outline-none focus:border-purple-500 text-white placeholder-slate-600 resize-none transition-colors"
-                placeholder="MESSAGE_CONTENT"
+                placeholder="Your Message"
               ></textarea>
               <button
                 type="submit"
