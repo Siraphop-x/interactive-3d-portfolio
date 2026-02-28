@@ -168,7 +168,7 @@ function Contact() {
               <button
                 type="submit"
                 disabled={result === "TRANSMITTING..."}
-                className="w-full py-4 bg-gradient-to-r from-pink-600 via-purple-600 to-cyan-600 rounded-xl font-bold tracking-widest uppercase text-white hover:opacity-90 transition-all hover:-translate-y-1 shadow-[0_0_20px_rgba(236,72,153,0.3)] disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full py-4 mt-1 cursor-pointer bg-[#ec4899] rounded-xl font-bold tracking-widest uppercase text-white hover:opacity-90 transition-all hover:-translate-y-1 shadow-[0_0_20px_rgba(236,72,153,0.3)] disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {result === "TRANSMITTING..." ? "TRANSMITTING..." : "TRANSMIT"}
               </button>

@@ -107,8 +107,8 @@ function About() {
               shadow: "hover:shadow-[0_0_15px_rgba(236,72,153,0.3)]",
             },
             {
-              value: "4",
-              label: "Months Internship",
+              value: "7",
+              label: "Months Experience",
               color: "text-cyan-400",
               border: "border-cyan-500/30",
               hoverBorder: "hover:border-cyan-500/80",
