@@ -12,7 +12,7 @@ import * as THREE from "three";
 import { roles } from "./heroData";
 
 // 3D Typography Component
-function Typography3D() {
+function Typography3D({ canvasHovered }) {
   const group = useRef();
   const [isHologram, setIsHologram] = useState(false);
   const [hovered, setHovered] = useState(false);
@@ -22,16 +22,18 @@ function Typography3D() {
   }, [hovered]);
 
   useFrame((state) => {
-    // Subtle rotation based on mouse position
-    const t = state.clock.getElapsedTime();
+    // Only track mouse when the pointer is inside the Canvas frame
+    const targetX = canvasHovered ? (state.mouse.y * Math.PI) / 6 : 0;
+    const targetY = canvasHovered ? (state.mouse.x * Math.PI) / 6 : 0;
+
     group.current.rotation.y = THREE.MathUtils.lerp(
       group.current.rotation.y,
-      (state.mouse.x * Math.PI) / 4,
+      targetY,
       0.1,
     );
     group.current.rotation.x = THREE.MathUtils.lerp(
       group.current.rotation.x,
-      (state.mouse.y * Math.PI) / 4,
+      targetX,
       0.1,
     );
   });
@@ -98,6 +100,7 @@ function Hero({ scrollToSection }) {
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const [typingSpeed, setTypingSpeed] = useState(150);
+  const [canvasHovered, setCanvasHovered] = useState(false);
 
   // Typewriter effect
   useEffect(() => {
@@ -134,11 +137,11 @@ function Hero({ scrollToSection }) {
       <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-20 mt-10 mb-10">
         {/* Left Side: Information */}
         <div className="text-left" data-aos="fade-right" data-aos-delay="200">
-          {/* Holographic / Cyberpunk Badge */}
+            {/* Holographic / Cyberpunk Badge */}
           <div className="inline-flex items-center gap-2 px-6 py-2 rounded-md bg-purple-900/40 border border-purple-500/50 text-purple-300 text-sm font-bold tracking-widest uppercase mb-8 shadow-[0_0_15px_rgba(168,85,247,0.4)] backdrop-blur-sm animate-pulse">
-            <span className="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_5px_rgba(6,182,212,0.8)]"></span>
-            SYS.PORTFOLIO_READY
-          </div>
+              <span className="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_5px_rgba(6,182,212,0.8)]"></span>
+              SYS.PORTFOLIO_READY
+            </div>
 
           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-tight mb-6 drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">
             Crafting{" "}
@@ -214,6 +217,8 @@ function Hero({ scrollToSection }) {
           className="relative h-[400px] sm:h-[500px] lg:h-[600px] w-full flex items-center justify-center cursor-move"
           data-aos="fade-left"
           data-aos-delay="400"
+          onMouseEnter={() => setCanvasHovered(true)}
+          onMouseLeave={() => setCanvasHovered(false)}
         >
           {/* A soft glowing backdrop for the 3D element */}
           <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/20 to-pink-500/20 rounded-full blur-[100px] mix-blend-screen pointer-events-none"></div>
@@ -235,7 +240,7 @@ function Hero({ scrollToSection }) {
               />
               <Environment preset="city" />
 
-              <Typography3D />
+              <Typography3D canvasHovered={canvasHovered} />
 
               <ContactShadows
                 position={[0, -3.5, 0]}

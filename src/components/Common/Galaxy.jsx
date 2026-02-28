@@ -55,18 +55,18 @@ export function Galaxy() {
 
   useFrame((state, delta) => {
     if (points.current) {
-      // Base rotation
+      // Base rotation only (ambient background)
       points.current.rotation.y += delta * 0.05;
 
-      // Mouse interactive tilt
+      // Keeps the default galaxy tilt
       points.current.rotation.x = THREE.MathUtils.lerp(
         points.current.rotation.x,
-        (Math.PI / 180) * 15 + (state.mouse.y * Math.PI) / 10,
+        (Math.PI / 180) * 15,
         0.05,
       );
       points.current.rotation.z = THREE.MathUtils.lerp(
         points.current.rotation.z,
-        (-state.mouse.x * Math.PI) / 15,
+        0,
         0.05,
       );
     }
