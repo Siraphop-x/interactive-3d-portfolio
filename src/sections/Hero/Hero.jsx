@@ -170,13 +170,13 @@ function Hero({ scrollToSection }) {
           <div className="flex flex-col sm:flex-row gap-4">
             <button
               onClick={() => scrollToSection("projects")}
-              className="px-8 py-4 bg-gradient-to-r from-cyan-600 to-blue-600 text-white rounded-xl font-bold tracking-wider uppercase hover:opacity-90 transition-all duration-300 hover:-translate-y-1 shadow-[0_0_20px_rgba(6,182,212,0.4)] border border-cyan-400/50"
+              className="px-8 py-4 bg-gradient-to-r from-cyan-600 to-blue-600 text-white rounded-xl font-bold tracking-wider uppercase hover:opacity-90 transition-all duration-300 hover:-translate-y-1 shadow-[0_0_20px_rgba(6,182,212,0.4)] border border-cyan-400/50 cursor-pointer"
             >
               Explore Work
             </button>
             <button
               onClick={() => scrollToSection("contact")}
-              className="px-8 py-4 bg-[#0a0f1a]/80 backdrop-blur-md border border-purple-500/50 text-purple-300 rounded-xl font-bold tracking-wider uppercase hover:bg-purple-900/30 hover:text-purple-200 transition-all duration-300 hover:-translate-y-1 shadow-[0_0_15px_rgba(168,85,247,0.2)]"
+              className="px-8 py-4 bg-[#0a0f1a]/80 backdrop-blur-md border border-purple-500/50 text-purple-300 rounded-xl font-bold tracking-wider uppercase hover:bg-purple-900/30 hover:text-purple-200 transition-all duration-300 hover:-translate-y-1 shadow-[0_0_15px_rgba(168,85,247,0.2)] cursor-pointer"
             >
               Contact Me
             </button>

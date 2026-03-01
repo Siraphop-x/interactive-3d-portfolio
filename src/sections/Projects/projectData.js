@@ -108,4 +108,26 @@ export const ProjectList = [
     ],
     githubUrl: "",
   },
+  {
+    id: 7,
+    title: "Galaxy Blaster",
+    description:
+      "A cutting-edge space shooter game combining Phaser 3 for 2D gameplay with Three.js for immersive 3D galaxy backgrounds. Features TypeScript architecture, real-time physics, and dynamic visual effects.",
+    img: "https://images.unsplash.com/photo-1446776877081-d282a0f896e2?w=400&h=250&fit=crop",
+    images: ["https://images.unsplash.com/photo-1446776877081-d282a0f896e2?w=400&h=250&fit=crop"],
+    date: "Mar 2026",
+    category: "Game Development",
+    technologies: [
+      "TypeScript",
+      "Phaser 3",
+      "Three.js",
+      "Vite",
+      "Tailwind CSS",
+      "HTML5 Canvas",
+      "WebGL",
+      "Game Physics",
+    ],
+    githubUrl: "https://github.com/Siraphop-x/galaxy-blaster",
+    liveDemo: "https://galaxy-blaster-smoky.vercel.app/",
+  },
 ];

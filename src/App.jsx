@@ -7,6 +7,7 @@ import About from "./sections/About/About";
 import Education from "./sections/Education/Education";
 import Skills from "./sections/Skills/Skills";
 import Projects from "./sections/Projects/Projects";
+import FunZone from "./sections/FunZone/FunZone";
 import Contact from "./sections/Contact/Contact";
 import Footer from "./components/Layout/Footer/Footer";
 import Background from "./components/Common/Background";
@@ -43,6 +44,7 @@ function App() {
         "education",
         "skills",
         "projects",
+        "fun-zone",
         "contact",
       ];
       const scrollPosition = window.scrollY + 100;
@@ -77,6 +79,7 @@ function App() {
       <Education />
       <Skills />
       <Projects />
+      <FunZone />
       <Contact />
       <Footer />
     </div>

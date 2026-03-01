@@ -3,7 +3,7 @@ import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
 export function Galaxy() {
-  const count = 6000; // Number of stars
+  const count = 10000; // Number of stars
   const points = useRef();
 
   const [positions, colors] = useMemo(() => {
