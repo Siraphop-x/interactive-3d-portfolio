@@ -1,14 +1,18 @@
+import { useState } from "react";
 import { ProjectList } from "./projectData";
 
 function Projects() {
+  const [showAll, setShowAll] = useState(false);
+  const visibleProjects = showAll ? ProjectList : ProjectList.slice(0, 3);
+
   return (
     <section
       id="projects"
       className="py-20 px-4 bg-transparent relative overflow-hidden"
     >
       {/* Background Glows */}
-      <div className="absolute top-1/2 left-1/4 w-96 h-96 bg-cyan-600/10 rounded-full blur-[120px] pointer-events-none"></div>
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-pink-600/10 rounded-full blur-[120px] pointer-events-none"></div>
+      <div className="absolute top-1/2 left-1/4 w-96 h-96 bg-cyan-600/10 rounded-full blur-[120px] pointer-events-none will-change-transform"></div>
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-pink-600/10 rounded-full blur-[120px] pointer-events-none will-change-transform"></div>
 
       <div className="max-w-6xl mx-auto relative z-10">
         <h2
@@ -28,10 +32,10 @@ function Projects() {
         </p>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {ProjectList.map((project, index) => (
+          {visibleProjects.map((project, index) => (
             <div
               key={project.id}
-              className="group bg-[#050810]/80 backdrop-blur-sm rounded-2xl overflow-hidden border border-cyan-500/20 hover:border-cyan-400/60 shadow-[0_0_15px_rgba(6,182,212,0.05)] hover:shadow-[0_0_25px_rgba(6,182,212,0.2)] transition-all duration-300 flex flex-col hover:-translate-y-2"
+              className="group bg-[#050810]/80 backdrop-blur-sm rounded-2xl overflow-hidden border border-cyan-500/20 hover:border-cyan-400/60 shadow-[0_0_15px_rgba(6,182,212,0.05)] hover:shadow-[0_0_25px_rgba(6,182,212,0.2)] transition-all duration-300 flex flex-col hover:-translate-y-2 will-change-transform"
               data-aos="fade-up"
               data-aos-delay={index * 100}
             >
@@ -69,9 +73,37 @@ function Projects() {
                     </span>
                   ))}
                   {project.technologies.length > 5 && (
-                    <span className="px-2.5 py-1 text-xs font-mono bg-[#0a0f1a] text-purple-300 rounded-md border border-purple-500/30 shadow-[0_0_8px_rgba(168,85,247,0.1)]">
-                      +{project.technologies.length - 5}
-                    </span>
+                    <div className="relative group/tooltip">
+                      <span className="px-2.5 py-1 text-xs font-mono bg-pink-500/10 text-pink-300 rounded-md border border-pink-500/40 shadow-[0_0_10px_rgba(236,72,153,0.2)] cursor-pointer hover:bg-pink-500/20 hover:border-pink-400/70 hover:shadow-[0_0_15px_rgba(236,72,153,0.4)] transition-all duration-200">
+                        +{project.technologies.length - 5}
+                      </span>
+                      {/* Cyberpunk Tooltip */}
+                      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 z-50 pointer-events-none opacity-0 group-hover/tooltip:opacity-100 transition-all duration-200 scale-95 group-hover/tooltip:scale-100">
+                        {/* Glowing border container */}
+                        <div className="relative bg-[#03040d] border border-pink-500/60 rounded-lg px-4 py-3 shadow-[0_0_20px_rgba(236,72,153,0.5),inset_0_0_20px_rgba(236,72,153,0.03)] min-w-[160px]">
+                          {/* Top scan line accent */}
+                          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-pink-400 to-transparent"></div>
+                          <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cyan-400/50 to-transparent"></div>
+
+                          <p className="text-pink-400 text-[10px] font-mono tracking-widest uppercase mb-2 flex items-center gap-1">
+                            <span className="w-1.5 h-1.5 rounded-full bg-pink-400 animate-pulse inline-block"></span>
+                            STACK.LIST
+                          </p>
+                          <div className="flex flex-wrap gap-1.5">
+                            {project.technologies.slice(5).map((tech, i) => (
+                              <span
+                                key={i}
+                                className="px-2 py-0.5 text-xs font-mono bg-purple-500/10 text-cyan-300 rounded border border-cyan-500/30"
+                              >
+                                {tech}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                        {/* Arrow */}
+                        <div className="absolute left-1/2 -translate-x-1/2 top-full w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[6px] border-t-pink-500/60"></div>
+                      </div>
+                    </div>
                   )}
                 </div>
                 {project.liveDemo && project.liveDemo !== "" && (
@@ -124,6 +156,38 @@ function Projects() {
             </div>
           ))}
         </div>
+
+        {/* Load More Button */}
+        {ProjectList.length > 3 && (
+          <div className="text-center mt-12" data-aos="fade-up" data-aos-delay="300">
+            <button
+              onClick={() => setShowAll(!showAll)}
+              className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-bold tracking-wider uppercase rounded-xl border-2 border-purple-400/50 transition-all duration-300 hover:shadow-[0_0_30px_rgba(168,85,247,0.5)] hover:-translate-y-1"
+            >
+              <svg
+                className="w-5 h-5 transition-transform duration-300"
+                style={{ transform: showAll ? "rotate(180deg)" : "rotate(0deg)" }}
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+              {showAll ? "Show Less" : `View All Projects (${ProjectList.length})`}
+            </button>
+            <p className="text-slate-500 text-sm mt-3 font-mono">
+              {showAll 
+                ? `Showing all ${ProjectList.length} projects` 
+                : `Showing 3 of ${ProjectList.length} projects`
+              }
+            </p>
+          </div>
+        )}
       </div>
     </section>
   );

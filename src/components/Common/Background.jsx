@@ -6,18 +6,22 @@ function Background() {
     <div className="fixed inset-0 overflow-hidden pointer-events-none z-[-1] bg-[#050510]">
       {/* Galaxy Canvas rendered behind everything globally */}
       <div className="absolute inset-0 overflow-hidden mix-blend-screen opacity-60">
-        <Canvas camera={{ position: [0, 4, 10], fov: 60 }}>
+        <Canvas 
+          camera={{ position: [0, 4, 10], fov: 60 }}
+          dpr={[1, 1.5]}
+          performance={{ min: 0.5 }}
+        >
           <Galaxy />
         </Canvas>
       </div>
 
-      <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-cyan-600/20 rounded-full blur-[150px] animate-pulse mix-blend-screen"></div>
+      <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-cyan-600/20 rounded-full blur-[150px] animate-pulse mix-blend-screen will-change-transform"></div>
       <div
-        className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-purple-600/20 rounded-full blur-[150px] animate-pulse mix-blend-screen"
+        className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-purple-600/20 rounded-full blur-[150px] animate-pulse mix-blend-screen will-change-transform"
         style={{ animationDelay: "1000ms" }}
       ></div>
       <div
-        className="absolute top-1/2 left-1/2 w-[400px] h-[400px] bg-pink-600/10 rounded-full blur-[120px] animate-bounce mix-blend-screen"
+        className="absolute top-1/2 left-1/2 w-[400px] h-[400px] bg-pink-600/10 rounded-full blur-[120px] animate-bounce mix-blend-screen will-change-transform"
         style={{ animationDuration: "7s" }}
       ></div>
 
