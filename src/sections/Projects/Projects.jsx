@@ -1,9 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import AOS from "aos";
 import { ProjectList } from "./projectData";
 
 function Projects() {
   const [showAll, setShowAll] = useState(false);
   const visibleProjects = showAll ? ProjectList : ProjectList.slice(0, 3);
+
+  useEffect(() => {
+    // Refresh AOS whenever projects list changes to detect new elements
+    AOS.refresh();
+  }, [showAll]);
 
   return (
     <section
@@ -159,14 +165,20 @@ function Projects() {
 
         {/* Load More Button */}
         {ProjectList.length > 3 && (
-          <div className="text-center mt-12" data-aos="fade-up" data-aos-delay="300">
+          <div
+            className="text-center mt-12"
+            data-aos="fade-up"
+            data-aos-delay="300"
+          >
             <button
               onClick={() => setShowAll(!showAll)}
               className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-bold tracking-wider uppercase rounded-xl border-2 border-purple-400/50 transition-all duration-300 hover:shadow-[0_0_30px_rgba(168,85,247,0.5)] hover:-translate-y-1"
             >
               <svg
                 className="w-5 h-5 transition-transform duration-300"
-                style={{ transform: showAll ? "rotate(180deg)" : "rotate(0deg)" }}
+                style={{
+                  transform: showAll ? "rotate(180deg)" : "rotate(0deg)",
+                }}
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -178,13 +190,14 @@ function Projects() {
                   d="M19 9l-7 7-7-7"
                 />
               </svg>
-              {showAll ? "Show Less" : `View All Projects (${ProjectList.length})`}
+              {showAll
+                ? "Show Less"
+                : `View All Projects (${ProjectList.length})`}
             </button>
             <p className="text-slate-500 text-sm mt-3 font-mono">
-              {showAll 
-                ? `Showing all ${ProjectList.length} projects` 
-                : `Showing 3 of ${ProjectList.length} projects`
-              }
+              {showAll
+                ? `Showing all ${ProjectList.length} projects`
+                : `Showing 3 of ${ProjectList.length} projects`}
             </p>
           </div>
         )}

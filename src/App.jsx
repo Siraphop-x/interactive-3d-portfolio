@@ -23,7 +23,6 @@ function App() {
       easing: "ease-out-cubic",
       once: true,
       offset: 50,
-      disable: "mobile", // Disable on mobile for better performance
     });
   }, []);
 
